@@ -3,24 +3,36 @@
 import { useState } from "react";
 import { Button } from "@heroui/react";
 import { useForm } from "react-hook-form";
+import { signInAction } from "../../../action/login.action";
+import { useRouter } from "next/navigation";
 
 export default function LoginFormComponent() {
   const [submitError, setSubmitError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues: { email: "", password: "" },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-    setSubmitError("Demo only — no login backend is connected yet.");
+  const onSubmit = async (data) => {
+    setIsLoading(true);
+    setSubmitError("");
+
+    try {
+      const result = await signInAction(data);
+      if (result?.error) {
+        setSubmitError("Invalid email or password.");
+      }
+    } catch (error) {
+      setSubmitError("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -46,7 +58,7 @@ export default function LoginFormComponent() {
           id="login-email"
           type="email"
           autoComplete="email"
-          {...register("email")}
+          {...register("email", { required: "Email is required"})}
           className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none ring-lime-400/20 focus:border-lime-400 focus:ring-2"
           placeholder="you@example.com"
         />
