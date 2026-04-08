@@ -11,7 +11,7 @@ export const { handlers, signIn, signOu, auth } = NextAuth({
       },
       async authorize(credentials) {
         const response = await loginService(credentials);
-        return response;
+            return response;
       },
     }),
   ],
