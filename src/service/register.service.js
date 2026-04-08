@@ -1,5 +1,5 @@
 
-import { proxyConfig } from "@/proxy";
+import { proxyConfig } from "@/apiConfig";
 
 export async function registerService(fullName, email, password) {
   try {
