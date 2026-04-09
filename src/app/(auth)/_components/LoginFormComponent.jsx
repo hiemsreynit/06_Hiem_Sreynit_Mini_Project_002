@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@heroui/react";
 import { useForm } from "react-hook-form";
-import { signInAction } from "../../../action/login.action";
+import { loginAction } from "../../../action/login.action";
 import { useRouter } from "next/navigation";
 
 export default function LoginFormComponent() {
@@ -24,7 +24,7 @@ export default function LoginFormComponent() {
     setSubmitError("");
 
     try {
-      const result = await signInAction(data);
+      const result = await loginAction(data);
       if (result?.error) {
         setSubmitError("Invalid email or password.");
       }

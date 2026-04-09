@@ -1,5 +1,5 @@
 
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://homework-api.noevchanmakara.site";
+export const API_BASE_URL = process.env.API_BASE_URL || "https://homework-api.noevchanmakara.site";
 
 export const proxyConfig = {
   auth: {
