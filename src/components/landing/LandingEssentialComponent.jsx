@@ -5,17 +5,16 @@ import { Button } from "@heroui/react";
 import {
   ESSENTIALS_TABS,
   filterProductsByEssentialsTab,
-  products,
-} from "../../data/mockData";
+} from "../../service/product.util";
 import ProductCardComponent from "../ProductCardComponent";
 
 const PAGE_SIZE = 8;
 
-export default function LandingEssentialsGrid() {
+export default function LandingEssentialsGrid({ initialProduct }) {
   const [tab, setTab] = useState("All");
   const [showAll, setShowAll] = useState(false);
 
-  const filtered = filterProductsByEssentialsTab(products, tab);
+  const filtered = filterProductsByEssentialsTab(initialProduct, tab);
   const visible = showAll ? filtered : filtered.slice(0, PAGE_SIZE);
   const canLoadMore = !showAll && filtered.length > PAGE_SIZE;
 
@@ -59,8 +58,8 @@ export default function LandingEssentialsGrid() {
       </div>
 
       <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
-        {visible.map((product, index) => (
-          <ProductCardComponent product={product} key={index}/>
+        {visible.map((product) => (
+          <ProductCardComponent product={product} key={product.productId}/>
         ))}
       </div>
 
