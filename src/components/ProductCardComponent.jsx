@@ -14,7 +14,7 @@ export function StarRow({ rating = 4.8 }) {
 }
 
 export default function ProductCardComponent({ product }) {
-  const { productId, productName, price, imageUrl } = product;
+  const { productId, name, price, imageUrl, star } = product;
 
   return (
     <article className="group relative rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-md">
@@ -36,10 +36,11 @@ export default function ProductCardComponent({ product }) {
         </div>
       </Link>
       <div className="relative mt-4 pr-14">
-        <StarRow />
+        {/* <StarRow /> */}
+        <p>{star}</p>
         <Link href={`/products/${productId}`}>
           <h3 className="mt-1 line-clamp-2 text-sm font-semibold text-gray-900 hover:text-lime-700">
-            {productName}
+            {name}
           </h3>
         </Link>
         <p className="mt-2 text-base font-semibold tabular-nums text-gray-900">${price}</p>
