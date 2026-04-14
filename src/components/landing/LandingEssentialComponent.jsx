@@ -10,13 +10,14 @@ import ProductCardComponent from "../ProductCardComponent";
 
 const PAGE_SIZE = 8;
 
-export default function LandingEssentialsGrid({ initialProduct }) {
+export default function LandingEssentialsGrid({ initialProduct = [] }) {
   const [tab, setTab] = useState("All");
   const [showAll, setShowAll] = useState(false);
 
   const filtered = filterProductsByEssentialsTab(initialProduct, tab);
   const visible = showAll ? filtered : filtered.slice(0, PAGE_SIZE);
   const canLoadMore = !showAll && filtered.length > PAGE_SIZE;
+  console.log("Products: ", initialProduct);
 
   return (
     <section id="shop" className="mx-auto w-full max-w-7xl py-16 lg:py-20">

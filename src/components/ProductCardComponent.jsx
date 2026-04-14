@@ -4,10 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import ButtonAddComponent from "./ButtonAddComponent";
 
-export function StarRow({ rating = 4.8 }) {
+export function StarRow({ rating }) {
+
+  const stars = "★".repeat(Math.floor(rating || 0));
+
   return (
     <p className="flex items-center gap-0.5 text-amber-400" aria-label={`${rating} stars`}>
-      <span className="text-sm">★★★★★</span>
+      <span className="text-sm">{stars}</span>
       <span className="ml-1 text-xs tabular-nums text-gray-500">{rating}</span>
     </p>
   );
@@ -15,6 +18,7 @@ export function StarRow({ rating = 4.8 }) {
 
 export default function ProductCardComponent({ product }) {
   const { productId, name, price, imageUrl, star } = product;
+  console.log("Products: ", product);
 
   return (
     <article className="group relative rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-md">
@@ -36,8 +40,7 @@ export default function ProductCardComponent({ product }) {
         </div>
       </Link>
       <div className="relative mt-4 pr-14">
-        {/* <StarRow /> */}
-        <p>{star}</p>
+        <StarRow rating={star}/>
         <Link href={`/products/${productId}`}>
           <h3 className="mt-1 line-clamp-2 text-sm font-semibold text-gray-900 hover:text-lime-700">
             {name}
