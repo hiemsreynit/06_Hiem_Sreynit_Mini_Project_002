@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import ShopCardComponent from "../../../components/shop/ShopCardComponent";
 
 export default function Page({ initialProducts = [] }) {
@@ -7,14 +7,17 @@ export default function Page({ initialProducts = [] }) {
   const [maxPrice, setMaxPrice] = useState(300);
   const [selectedCategories, setSelectedCategories] = useState([]);
 
-  // 1. Extract category names correctly from the API object structure
   const categories = useMemo(() => {
     const products = initialProducts || [];
-    // Accessing p.category.name based on your Swagger screenshot
-    return [...new Set(products.map((p) => p.category?.name))].filter(Boolean);
+    return [...new Set(products.map((p) => p.categoryId))].filter(Boolean);
   }, [initialProducts]);
 
-  // 2. Fix the filtering logic
+  const [products, setProducts] = useState(initialProducts);
+  
+  useEffect(() => {
+    console.log("initialProducts received:", initialProducts.length);
+  }, [initialProducts]);
+
   const filteredProducts = useMemo(() => {
     const products = initialProducts || [];
     return products.filter((product) => {
@@ -23,11 +26,10 @@ export default function Page({ initialProducts = [] }) {
         .includes(search.toLowerCase());
       const matchesPrice = Number(product.price) <= maxPrice;
 
-      // Compare the string name of the category
       const productCatName = product.category?.name;
       const matchesCategory =
         selectedCategories.length === 0 ||
-        selectedCategories.includes(productCatName);
+        selectedCategories.includes(product.categoryId);
 
       return matchesSearch && matchesPrice && matchesCategory;
     });
